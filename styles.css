@@ -35,12 +35,19 @@
   --prim-color-ink: #0A0D14;
   --prim-color-snow: #F8FAFC;
   --prim-color-cyan: #00F0FF;
+  /* Solo para los difuminados de fondo */
+  --prim-color-blue: #2E5BFF;
+  --prim-color-red: #FF3B5C;
 
   /* Opacidades permitidas */
   --prim-alpha-4: 4%;
   --prim-alpha-6: 6%;
   --prim-alpha-8: 8%;
   --prim-alpha-12: 12%;
+  --prim-alpha-10: 10%;
+  --prim-alpha-14: 14%;
+  --prim-alpha-18: 18%;
+  --prim-alpha-80: 80%;
   --prim-alpha-20: 20%;
   --prim-alpha-25: 25%;
   --prim-alpha-30: 30%;
@@ -69,6 +76,7 @@
   --prim-duration-150: 150ms;
   --prim-duration-300: 300ms;
   --prim-duration-700: 700ms;
+  --prim-duration-drift: 26s;
   --prim-ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --prim-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --prim-distance-2: 2px;
@@ -129,6 +137,12 @@
   --color-accent-line-strong: color-mix(in srgb, var(--prim-color-cyan) var(--prim-alpha-40), transparent);
   --color-accent-halo: color-mix(in srgb, var(--prim-color-cyan) var(--prim-alpha-25), transparent);
   --color-accent-grid: color-mix(in srgb, var(--prim-color-cyan) var(--prim-alpha-50), transparent);
+  --color-glow-blue: color-mix(in srgb, var(--prim-color-blue) var(--prim-alpha-18), transparent);
+  --color-glow-red: color-mix(in srgb, var(--prim-color-red) var(--prim-alpha-14), transparent);
+  --color-glow-cyan: color-mix(in srgb, var(--prim-color-cyan) var(--prim-alpha-10), transparent);
+  --color-backdrop: color-mix(in srgb, var(--prim-color-ink) var(--prim-alpha-80), transparent);
+  --color-glow-line-blue: var(--prim-color-blue);
+  --color-glow-line-red: var(--prim-color-red);
   --color-on-accent: var(--prim-color-ink);
   --color-focus: var(--prim-color-cyan);
   --color-mask: var(--prim-color-ink);
@@ -172,6 +186,7 @@
   --motion-component: var(--prim-duration-300);
   --motion-section: var(--prim-duration-700);
   --motion-stagger: var(--prim-duration-70);
+  --motion-drift: var(--prim-duration-drift);
   --motion-distance: var(--prim-distance-20);
   --motion-lift: calc(var(--prim-distance-2) * -1);
   --motion-nudge: var(--prim-distance-2);
@@ -213,6 +228,7 @@
   --btn-press: var(--motion-press);
 
   --card-bg: var(--color-surface);
+  --card-backdrop: var(--color-backdrop);
   --card-border: var(--color-border);
   --card-chamfer: var(--shape-chamfer-md);
   --card-padding: var(--space-md);
@@ -249,6 +265,13 @@
   --net-accent: var(--color-accent);
 
   --mark-grid: var(--color-accent-grid);
+  --glow-blue: var(--color-glow-blue);
+  --glow-red: var(--color-glow-red);
+  --glow-cyan: var(--color-glow-cyan);
+  --glow-fade: var(--motion-section);
+  --glow-drift: var(--motion-drift);
+  --plan-enterprise-line-start: var(--color-glow-line-red);
+  --plan-enterprise-line-end: var(--color-glow-line-blue);
   --founder-frame: var(--color-accent);
   --founder-bg: var(--color-surface);
   --compare-fade: var(--color-bg);
@@ -309,7 +332,6 @@ html {
 body {
   margin: 0;
   min-width: 20rem;
-  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);
   font-size: var(--text-body);
@@ -693,6 +715,62 @@ main:focus {
 }
 
 /* 1. Hero -------------------------------------------------------------------- */
+/* Difuminados de color fijos detrás del contenido; cambian según la sección visible */
+.glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow__set {
+  position: absolute;
+  inset: -10%;
+  opacity: 0;
+  transition: opacity var(--glow-fade) var(--ease-move);
+}
+
+.glow__set.is-active {
+  opacity: 1;
+}
+
+.glow__set--hero {
+  background:
+    radial-gradient(40% 35% at 85% 15%, var(--glow-blue), transparent),
+    radial-gradient(35% 30% at 10% 85%, var(--glow-cyan), transparent);
+}
+
+.glow__set--planes {
+  background:
+    radial-gradient(38% 32% at 15% 20%, var(--glow-red), transparent),
+    radial-gradient(42% 36% at 90% 80%, var(--glow-blue), transparent);
+}
+
+.glow__set--proceso {
+  background:
+    radial-gradient(45% 40% at 80% 40%, var(--glow-blue), transparent),
+    radial-gradient(30% 28% at 5% 10%, var(--glow-red), transparent);
+}
+
+.glow__set--contacto {
+  background:
+    radial-gradient(40% 35% at 20% 70%, var(--glow-red), transparent),
+    radial-gradient(38% 34% at 85% 25%, var(--glow-cyan), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .glow__set {
+    animation: glow-drift var(--glow-drift) var(--ease-move) infinite alternate;
+  }
+}
+
+@keyframes glow-drift {
+  to {
+    transform: translate3d(4%, -3%, 0);
+  }
+}
+
 .hero {
   position: relative;
   isolation: isolate;
@@ -965,7 +1043,7 @@ main:focus {
 }
 
 .value__panel--custom {
-  background: var(--card-bg);
+  background: linear-gradient(var(--card-bg), var(--card-bg)), var(--card-backdrop);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--card-chamfer)), calc(100% - var(--card-chamfer)) 100%, 0 100%);
 }
 
@@ -1027,7 +1105,7 @@ main:focus {
   isolation: isolate;
   padding: var(--card-padding);
   border: var(--shape-border) solid var(--card-border);
-  background: var(--card-bg);
+  background: linear-gradient(var(--card-bg), var(--card-bg)), var(--card-backdrop);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--card-chamfer)), calc(100% - var(--card-chamfer)) 100%, 0 100%);
   transition: transform var(--motion-micro) var(--ease-move);
 }
@@ -1138,6 +1216,16 @@ main:focus {
   gap: var(--space-md);
 }
 
+.plan--enterprise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--shape-focus);
+  background: linear-gradient(90deg, var(--plan-enterprise-line-start), var(--plan-enterprise-line-end));
+}
+
 .plan--featured {
   --card-border: var(--plan-featured-border);
 }
@@ -1198,7 +1286,13 @@ main:focus {
 
 @media (min-width: 768px) {
   .plans__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .plans__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
