@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>morfy — Marcas memorables que perduran en la mente de tu audiencia</title>
+  <meta name="description" content="Estudio de contenido y marca con apoyo de IA. Dejando una huella de alto valor a través de estrategia, diseño e inteligencia artificial.">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:site_name" content="morfy">
+  <meta property="og:title" content="Marcas memorables que perduran en la mente de tu audiencia">
+  <meta property="og:description" content="Dejando una huella de alto valor a través de estrategia, diseño e inteligencia artificial.">
+  <!-- PENDIENTE: og:image (imagen 1200×630 aprobada por la marca) y og:url (dominio oficial; no se inventa) -->
+
+  <link rel="icon" type="image/webp" href="assets/logo-morfy.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&amp;display=swap"></noscript>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Activa los estados iniciales de animación; si script.js no arranca en 2,5 s, todo queda visible. -->
+  <script>
+    (function (doc) {
+      doc.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!window.morfyBooted) doc.documentElement.classList.remove("js");
+      }, 2500);
+    })(document);
+  </script>
+
+  <script src="script.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <!-- PENDIENTE: logo oficial en SVG o PNG transparente, sin el marco gris de exportación del archivo adjunto -->
+      <a class="brand" href="#inicio">
+        <img class="brand__logo" src="assets/logo-morfy.webp" width="1986" height="2000" alt="morfy, ir al inicio" decoding="async" fetchpriority="high">
+      </a>
+      <nav class="site-nav" aria-label="Secciones">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#planes">Planes</a></li>
+          <li><a class="site-nav__link" href="#proceso">Cómo trabajamos</a></li>
+          <li><a class="site-nav__link" href="#preguntas">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primary site-header__cta" data-cta-header data-visible="false" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <!-- 1. Hero -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title" data-hero>
+      <div class="hero__grid" aria-hidden="true">
+        <span class="hero__layer hero__layer--fine" data-parallax="4"></span>
+        <span class="hero__layer hero__layer--major" data-parallax="8"></span>
+        <span class="hero__layer hero__layer--nodes" data-parallax="12"></span>
+      </div>
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="label">Estudio de contenido y marca con apoyo de IA</p>
+          <h1 class="hero__title" id="hero-title">Marcas memorables que perduran en la mente de tu audiencia</h1>
+          <!-- Solo detecta las líneas del titular; la animación es CSS y no espera a ninguna librería. -->
+          <script>
+            (function () {
+              var title = document.getElementById("hero-title");
+              if (!title || !document.documentElement.classList.contains("js")) return;
+              var words = title.textContent.replace(/\s+/g, " ").trim().split(" ");
+              function split(animate) {
+                title.textContent = "";
+                var spans = words.map(function (word, i) {
+                  var span = document.createElement("span");
+                  span.textContent = word;
+                  title.appendChild(span);
+                  if (i < words.length - 1) title.appendChild(document.createTextNode(" "));
+                  return span;
+                });
+                var lines = [];
+                var top = null;
+                spans.forEach(function (span) {
+                  if (span.offsetTop !== top) {
+                    lines.push([]);
+                    top = span.offsetTop;
+                  }
+                  lines[lines.length - 1].push(span.textContent);
+                });
+                title.textContent = "";
+                lines.forEach(function (line, i) {
+                  var mask = document.createElement("span");
+                  var inner = document.createElement("span");
+                  mask.className = "line";
+                  inner.className = "line__inner";
+                  inner.style.setProperty("--i", i);
+                  inner.textContent = line.join(" ");
+                  mask.appendChild(inner);
+                  title.appendChild(mask);
+                  if (i < lines.length - 1) title.appendChild(document.createTextNode(" "));
+                });
+                title.classList.add("is-split");
+                title.classList.toggle("is-static", !animate);
+              }
+              split(true);
+              window.morfySplitTitle = function () {
+                split(false);
+              };
+            })();
+          </script>
+          <p class="hero__lead">Dejando una huella de alto valor a través de estrategia, diseño e inteligencia artificial.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+            <a class="text-link" href="#planes">Ver planes
+              <svg class="text-link__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v13M6 12l6 6 6-6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="net" data-net aria-hidden="true">
+            <svg class="net__svg" viewBox="0 0 600 600" focusable="false" aria-hidden="true">
+            <g class="net__edges"><line x1="277.12" y1="333.84" x2="276.11" y2="241.64" stroke-opacity="0.15" vector-effect="non-scaling-stroke"/><line x1="277.12" y1="333.84" x2="360.41" y2="360.43" stroke-opacity="0.16" vector-effect="non-scaling-stroke"/><line x1="277.12" y1="333.84" x2="213.36" y2="371.98" stroke-opacity="0.17" vector-effect="non-scaling-stroke"/><line x1="276.11" y1="241.64" x2="275.01" y2="140.97" stroke-opacity="0.19" vector-effect="non-scaling-stroke"/><line x1="276.11" y1="241.64" x2="363.23" y2="263.88" stroke-opacity="0.2" vector-effect="non-scaling-stroke"/><line x1="360.41" y1="360.43" x2="363.23" y2="263.88" stroke-opacity="0.2" vector-effect="non-scaling-stroke"/><line x1="276.11" y1="241.64" x2="209.22" y2="273.57" stroke-opacity="0.21" vector-effect="non-scaling-stroke"/><line x1="209.22" y1="273.57" x2="162.64" y2="191.33" stroke-opacity="0.22" vector-effect="non-scaling-stroke"/><line x1="360.41" y1="360.43" x2="300" y2="403.33" stroke-opacity="0.22" vector-effect="non-scaling-stroke"/><line x1="213.36" y1="371.98" x2="209.22" y2="273.57" stroke-opacity="0.22" vector-effect="non-scaling-stroke"/><line x1="360.41" y1="360.43" x2="461.61" y2="289" stroke-opacity="0.23" vector-effect="non-scaling-stroke"/><line x1="213.36" y1="371.98" x2="300" y2="403.33" stroke-opacity="0.23" vector-effect="non-scaling-stroke"/><line x1="204.66" y1="165.29" x2="162.64" y2="191.33" stroke-opacity="0.23" vector-effect="non-scaling-stroke"/><line x1="275.01" y1="140.97" x2="366.32" y2="157.89" stroke-opacity="0.23" vector-effect="non-scaling-stroke"/><line x1="213.36" y1="371.98" x2="138.05" y2="417.04" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/><line x1="363.23" y1="263.88" x2="366.32" y2="157.89" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/><line x1="360.41" y1="360.43" x2="398.31" y2="438.91" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/><line x1="275.01" y1="140.97" x2="204.66" y2="165.29" stroke-opacity="0.24" vector-effect="non-scaling-stroke"/><line x1="363.23" y1="263.88" x2="461.61" y2="289" stroke-opacity="0.25" vector-effect="non-scaling-stroke"/><line x1="461.61" y1="289" x2="504.23" y2="225.32" stroke-opacity="0.25" vector-effect="non-scaling-stroke"/><line x1="363.23" y1="263.88" x2="300" y2="300" stroke-opacity="0.25" vector-effect="non-scaling-stroke"/><line x1="209.22" y1="273.57" x2="204.66" y2="165.29" stroke-opacity="0.26" vector-effect="non-scaling-stroke"/><line x1="209.22" y1="273.57" x2="300" y2="300" stroke-opacity="0.26" vector-effect="non-scaling-stroke"/><line x1="138.05" y1="417.04" x2="218.91" y2="515.44" stroke-opacity="0.26" vector-effect="non-scaling-stroke"/><line x1="470.05" y1="177.11" x2="504.23" y2="225.32" stroke-opacity="0.27" vector-effect="non-scaling-stroke"/><line x1="300" y1="403.33" x2="300" y2="300" stroke-opacity="0.27" vector-effect="non-scaling-stroke"/><line x1="209.22" y1="273.57" x2="129.57" y2="311.6" stroke-opacity="0.27" vector-effect="non-scaling-stroke"/><line x1="300" y1="403.33" x2="398.31" y2="438.91" stroke-opacity="0.27" vector-effect="non-scaling-stroke"/><line x1="366.32" y1="157.89" x2="470.05" y2="177.11" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="398.31" y1="438.91" x2="461.61" y2="289" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="300" y1="403.33" x2="227.87" y2="454.55" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="461.61" y1="289" x2="470.05" y2="177.11" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="366.32" y1="157.89" x2="387.83" y2="66.67" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="227.87" y1="454.55" x2="218.91" y2="515.44" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="138.05" y1="417.04" x2="129.57" y2="311.6" stroke-opacity="0.28" vector-effect="non-scaling-stroke"/><line x1="366.32" y1="157.89" x2="300" y2="185.57" stroke-opacity="0.29" vector-effect="non-scaling-stroke"/><line x1="129.57" y1="311.6" x2="204.66" y2="165.29" stroke-opacity="0.29" vector-effect="non-scaling-stroke"/><line x1="138.05" y1="417.04" x2="227.87" y2="454.55" stroke-opacity="0.29" vector-effect="non-scaling-stroke"/><line x1="204.66" y1="165.29" x2="300" y2="185.57" stroke-opacity="0.29" vector-effect="non-scaling-stroke"/><line x1="461.61" y1="289" x2="403.67" y2="330.18" stroke-opacity="0.29" vector-effect="non-scaling-stroke"/><line x1="300" y1="300" x2="300" y2="185.57" stroke-opacity="0.3" vector-effect="non-scaling-stroke"/><line x1="138.05" y1="417.04" x2="58.78" y2="388.2" stroke-opacity="0.3" vector-effect="non-scaling-stroke"/><line x1="470.05" y1="177.11" x2="387.83" y2="66.67" stroke-opacity="0.3" vector-effect="non-scaling-stroke"/><line x1="300" y1="300" x2="403.67" y2="330.18" stroke-opacity="0.3" vector-effect="non-scaling-stroke"/><line x1="398.31" y1="438.91" x2="403.67" y2="330.18" stroke-opacity="0.31" vector-effect="non-scaling-stroke"/><line x1="300" y1="300" x2="223.82" y2="343.51" stroke-opacity="0.31" vector-effect="non-scaling-stroke"/><line x1="129.57" y1="311.6" x2="58.78" y2="388.2" stroke-opacity="0.31" vector-effect="non-scaling-stroke"/><line x1="129.57" y1="311.6" x2="223.82" y2="343.51" stroke-opacity="0.31" vector-effect="non-scaling-stroke"/><line x1="398.31" y1="438.91" x2="331.05" y2="497.64" stroke-opacity="0.31" vector-effect="non-scaling-stroke"/><line x1="204.66" y1="165.29" x2="219.28" y2="219.26" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="227.87" y1="454.55" x2="223.82" y2="343.51" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="470.05" y1="177.11" x2="409.66" y2="208.89" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="227.87" y1="454.55" x2="331.05" y2="497.64" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="398.31" y1="438.91" x2="481.23" y2="443.36" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="300" y1="185.57" x2="409.66" y2="208.89" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="129.57" y1="311.6" x2="219.28" y2="219.26" stroke-opacity="0.32" vector-effect="non-scaling-stroke"/><line x1="403.67" y1="330.18" x2="409.66" y2="208.89" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="300" y1="185.57" x2="219.28" y2="219.26" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="403.67" y1="330.18" x2="481.23" y2="443.36" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="403.67" y1="330.18" x2="332.94" y2="380.46" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="223.82" y1="343.51" x2="219.28" y2="219.26" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="223.82" y1="343.51" x2="332.94" y2="380.46" stroke-opacity="0.33" vector-effect="non-scaling-stroke"/><line x1="331.05" y1="497.64" x2="332.94" y2="380.46" stroke-opacity="0.34" vector-effect="non-scaling-stroke"/><line x1="409.66" y1="208.89" x2="335.06" y2="248.15" stroke-opacity="0.34" vector-effect="non-scaling-stroke"/><line x1="219.28" y1="219.26" x2="335.06" y2="248.15" stroke-opacity="0.34" vector-effect="non-scaling-stroke"/><line x1="332.94" y1="380.46" x2="335.06" y2="248.15" stroke-opacity="0.34" vector-effect="non-scaling-stroke"/></g>
+            <g class="net__nodes"><rect x="274.12" y="330.84" width="6" height="6" fill-opacity="0.36"/><rect x="273.11" y="238.64" width="6" height="6" fill-opacity="0.46"/><rect x="357.41" y="357.43" width="6" height="6" fill-opacity="0.49"/><rect x="159.64" y="188.33" width="6" height="6" fill-opacity="0.5"/><rect x="210.36" y="368.98" width="6" height="6" fill-opacity="0.54"/><rect x="272.01" y="137.97" width="6" height="6" fill-opacity="0.56"/><rect class="net__accent" x="358.73" y="259.38" width="9" height="9" fill-opacity="1"/><rect x="501.23" y="222.32" width="6" height="6" fill-opacity="0.61"/><rect x="206.22" y="270.57" width="6" height="6" fill-opacity="0.64"/><rect x="297" y="400.33" width="6" height="6" fill-opacity="0.66"/><rect x="363.32" y="154.89" width="6" height="6" fill-opacity="0.68"/><rect x="215.91" y="512.44" width="6" height="6" fill-opacity="0.68"/><rect class="net__accent" x="457.11" y="284.5" width="9" height="9" fill-opacity="1"/><rect x="135.05" y="414.04" width="6" height="6" fill-opacity="0.71"/><rect x="201.66" y="162.29" width="6" height="6" fill-opacity="0.73"/><rect class="net__accent" x="295.5" y="295.5" width="9" height="9" fill-opacity="1"/><rect x="395.31" y="435.91" width="6" height="6" fill-opacity="0.77"/><rect x="467.05" y="174.11" width="6" height="6" fill-opacity="0.79"/><rect class="net__accent" x="125.07" y="307.1" width="9" height="9" fill-opacity="1"/><rect x="384.83" y="63.67" width="6" height="6" fill-opacity="0.81"/><rect x="224.87" y="451.55" width="6" height="6" fill-opacity="0.81"/><rect x="297" y="182.57" width="6" height="6" fill-opacity="0.82"/><rect x="400.67" y="327.18" width="6" height="6" fill-opacity="0.84"/><rect x="55.78" y="385.2" width="6" height="6" fill-opacity="0.85"/><rect class="net__accent" x="219.32" y="339.01" width="9" height="9" fill-opacity="1"/><rect x="328.05" y="494.64" width="6" height="6" fill-opacity="0.88"/><rect x="406.66" y="205.89" width="6" height="6" fill-opacity="0.88"/><rect x="478.23" y="440.36" width="6" height="6" fill-opacity="0.89"/><rect x="216.28" y="216.26" width="6" height="6" fill-opacity="0.89"/><rect x="329.94" y="377.46" width="6" height="6" fill-opacity="0.9"/><rect x="332.06" y="245.15" width="6" height="6" fill-opacity="0.9"/></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Tensión -->
+    <section class="section tension" id="tension" aria-labelledby="tension-title">
+      <div class="container">
+        <h2 class="tension__title" id="tension-title" data-reveal>No todo diseño bonito genera ventas.</h2>
+        <p class="tension__text" data-reveal>Muchos negocios tienen un servicio excelente, pero su imagen en redes no lo refleja.</p>
+      </div>
+    </section>
+
+    <!-- 3. Propuesta de valor -->
+    <section class="section value" id="propuesta" aria-labelledby="value-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Nuestra propuesta</p>
+          <h2 class="section-title" id="value-title">Molde repetido o diseño a medida</h2>
+        </div>
+        <div class="value__compare" data-reveal-group>
+          <div class="value__panel value__panel--mold" data-reveal>
+            <p class="value__tag">Molde repetido</p>
+            <p class="value__text">Soluciones en serie: la misma fórmula para cualquier marca.</p>
+          </div>
+          <div class="value__panel value__panel--custom" data-reveal>
+            <p class="value__tag">A medida</p>
+            <p class="value__text">Diseño con carácter y propósito, pensado para el objetivo de tu marca.</p>
+          </div>
+        </div>
+        <p class="value__statement">La IA es un potenciador de la imaginación humana, no un atajo. La estrategia es 100&nbsp;% humana.</p>
+        <div class="section-actions">
+          <a class="btn btn--primary" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Qué hacemos -->
+    <section class="section services" id="servicio" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Qué hacemos</p>
+          <h2 class="section-title" id="services-title">Gestión de contenido para Instagram</h2>
+          <p class="section-lead">Preparamos tu parrilla mensual y producimos las piezas visuales con apoyo de IA.</p>
+        </div>
+        <ul class="services__grid" data-reveal-group>
+          <li class="card service" data-tilt data-reveal>
+            <svg class="service__icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M4 4h16v12l-4 4H4z"/><path d="M8 8h2v2H8z"/><path d="M8 13.5h8M8 16.5h5"/></svg>
+            <h3 class="card__title">Post</h3>
+            <p class="card__text">Una pieza visual que comunica una idea clara en tu feed.</p>
+          </li>
+          <li class="card service" data-tilt data-reveal>
+            <svg class="service__icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M8 4h12v11"/><path d="M4 8h12v9l-3 3H4z"/><path d="M8 14h4"/></svg>
+            <h3 class="card__title">Carrusel</h3>
+            <p class="card__text">Varias láminas para explicar, enseñar o contar paso a paso.</p>
+          </li>
+          <li class="card service" data-tilt data-reveal>
+            <svg class="service__icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M7 3h10v15l-3 3H7z"/><path d="M9.5 6.5h2.5M14 6.5h1"/><path d="M10.5 12h3v3h-3z"/></svg>
+            <h3 class="card__title">Historia</h3>
+            <p class="card__text">Contenido diario que mantiene tu marca presente.</p>
+          </li>
+          <li class="card service" data-tilt data-reveal>
+            <svg class="service__icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M7 3h10v15l-3 3H7z"/><path d="M10.5 9v6l4.5-3z"/></svg>
+            <h3 class="card__title">Reel</h3>
+            <p class="card__text">Video corto vertical para mostrar tu marca en movimiento.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. Planes -->
+    <!-- PENDIENTE: precios provisionales (COP por mes); confirmar antes de publicar -->
+    <section class="section plans" id="planes" aria-labelledby="plans-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Planes</p>
+          <h2 class="section-title" id="plans-title">Elige el ritmo de tu contenido</h2>
+          <p class="section-lead">Una iteración es un cambio o arreglo al diseño.</p>
+          <p class="plans__note">Precios en pesos colombianos (COP), por mes.</p>
+        </div>
+
+        <div class="plans__grid" data-reveal-group>
+          <article class="card plan" data-tilt data-reveal aria-labelledby="plan-basico">
+            <h3 class="plan__name" id="plan-basico">Básico</h3>
+            <p class="plan__price"><span class="plan__amount">$300.000</span> <span class="plan__period">COP al mes</span></p>
+            <dl class="plan__specs">
+              <div class="plan__row"><dt>Posts</dt><dd>8</dd></div>
+              <div class="plan__row"><dt>Carruseles</dt><dd>6</dd></div>
+              <div class="plan__row"><dt>Historias</dt><dd>1 al día</dd></div>
+              <!-- PENDIENTE: reels del plan Básico (1 al mes, provisional) -->
+              <div class="plan__row"><dt>Reels</dt><dd>1</dd></div>
+              <div class="plan__row"><dt>Iteraciones</dt><dd>2</dd></div>
+            </dl>
+            <a class="btn btn--secondary plan__cta" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Plan%20B%C3%A1sico" target="_blank" rel="noopener">Elegir el plan Básico<span class="visually-hidden"> (abre WhatsApp)</span></a>
+          </article>
+
+          <article class="card plan plan--featured" data-tilt data-reveal aria-labelledby="plan-avanzado">
+            <h3 class="plan__name" id="plan-avanzado">Avanzado</h3>
+            <p class="plan__price"><span class="plan__amount">$500.000</span> <span class="plan__period">COP al mes</span></p>
+            <dl class="plan__specs">
+              <div class="plan__row"><dt>Posts</dt><dd>12</dd></div>
+              <div class="plan__row"><dt>Carruseles</dt><dd>10</dd></div>
+              <div class="plan__row"><dt>Historias</dt><dd>2 al día</dd></div>
+              <div class="plan__row"><dt>Reels</dt><dd>4</dd></div>
+              <div class="plan__row"><dt>Iteraciones</dt><dd>4</dd></div>
+            </dl>
+            <a class="btn btn--secondary plan__cta" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Plan%20Avanzado" target="_blank" rel="noopener">Elegir el plan Avanzado<span class="visually-hidden"> (abre WhatsApp)</span></a>
+          </article>
+
+          <article class="card plan" data-tilt data-reveal aria-labelledby="plan-premium">
+            <h3 class="plan__name" id="plan-premium">Premium</h3>
+            <p class="plan__price"><span class="plan__amount">$800.000</span> <span class="plan__period">COP al mes</span></p>
+            <dl class="plan__specs">
+              <div class="plan__row"><dt>Posts</dt><dd>18</dd></div>
+              <div class="plan__row"><dt>Carruseles</dt><dd>14</dd></div>
+              <div class="plan__row"><dt>Historias</dt><dd>4 al día</dd></div>
+              <div class="plan__row"><dt>Reels</dt><dd>6</dd></div>
+              <div class="plan__row"><dt>Iteraciones</dt><dd>6</dd></div>
+            </dl>
+            <a class="btn btn--secondary plan__cta" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Plan%20Premium" target="_blank" rel="noopener">Elegir el plan Premium<span class="visually-hidden"> (abre WhatsApp)</span></a>
+          </article>
+        </div>
+
+        <div class="compare" data-compare>
+          <button class="btn btn--secondary compare__toggle" type="button" aria-expanded="true" aria-controls="comparador" data-compare-toggle>
+            <span data-compare-label>Ocultar comparación</span>
+          </button>
+          <div class="compare__panel" id="comparador">
+            <p class="compare__title" id="comparador-titulo">Comparación de planes</p>
+            <p class="compare__hint">Desliza la tabla para ver los tres planes.</p>
+            <div class="compare__frame" data-compare-frame data-start="true" data-end="false">
+              <div class="compare__scroll" tabindex="0" role="region" aria-labelledby="comparador-titulo" data-compare-scroll>
+                <table class="compare__table">
+                  <caption class="visually-hidden">Cantidades incluidas en cada plan por mes</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Incluye</th>
+                      <th scope="col">Básico</th>
+                      <th scope="col">Avanzado</th>
+                      <th scope="col">Premium</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Precio al mes</th><td>$300.000</td><td>$500.000</td><td>$800.000</td></tr>
+                    <tr><th scope="row">Posts</th><td>8</td><td>12</td><td>18</td></tr>
+                    <tr><th scope="row">Carruseles</th><td>6</td><td>10</td><td>14</td></tr>
+                    <tr><th scope="row">Historias</th><td>1 al día</td><td>2 al día</td><td>4 al día</td></tr>
+                    <tr><th scope="row">Reels</th><td>1</td><td>4</td><td>6</td></tr>
+                    <tr><th scope="row">Iteraciones</th><td>2</td><td>4</td><td>6</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Cómo trabajamos -->
+    <section class="section process" id="proceso" aria-labelledby="process-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Proceso</p>
+          <h2 class="section-title" id="process-title">Cómo trabajamos</h2>
+        </div>
+        <div class="steps" data-steps>
+          <svg class="steps__line" viewBox="0 0 2 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="steps__track" d="M1 0V100"/>
+            <path class="steps__progress" d="M1 0V100" pathLength="1"/>
+          </svg>
+          <ol class="steps__list">
+            <li class="step" data-step>
+              <span class="step__node" aria-hidden="true"><span class="step__node-on"></span></span>
+              <span class="step__num" aria-hidden="true">01</span>
+              <h3 class="step__title">Objetivo</h3>
+              <p class="step__text">Nos cuentas el objetivo de tu marca.</p>
+            </li>
+            <li class="step" data-step>
+              <span class="step__node" aria-hidden="true"><span class="step__node-on"></span></span>
+              <span class="step__num" aria-hidden="true">02</span>
+              <h3 class="step__title">Parrilla</h3>
+              <p class="step__text">Preparamos tu parrilla de contenido en 3 días.</p>
+            </li>
+            <li class="step" data-step>
+              <span class="step__node" aria-hidden="true"><span class="step__node-on"></span></span>
+              <span class="step__num" aria-hidden="true">03</span>
+              <h3 class="step__title">Producción</h3>
+              <p class="step__text">Producimos el contenido visual y se publica según la parrilla.</p>
+            </li>
+            <li class="step" data-step>
+              <span class="step__node" aria-hidden="true"><span class="step__node-on"></span></span>
+              <span class="step__num" aria-hidden="true">04</span>
+              <h3 class="step__title">Ajustes</h3>
+              <p class="step__text">Ajustamos con las iteraciones de tu plan.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Para quién es -->
+    <section class="section audience" id="para-quien" aria-labelledby="audience-title">
+      <div class="container audience__inner">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Para quién es</p>
+          <h2 class="section-title" id="audience-title">Para marcas que entienden el diseño como inversión</h2>
+          <p class="section-lead">Negocios y emprendedores que quieren crecer en Instagram con una imagen cuidada.</p>
+        </div>
+        <div class="audience__filters" data-reveal>
+          <p class="audience__filters-title">Nuestros filtros</p>
+          <ul class="filters">
+            <li>No todo diseño bonito genera ventas.</li>
+            <li>No toda estrategia con IA es transparente.</li>
+            <li>No todo cliente tiene cabida en nuestro portafolio.</li>
+          </ul>
+        </div>
+        <div class="section-actions">
+          <a class="btn btn--primary" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Somos nuevos -->
+    <section class="section new" id="somos-nuevos" aria-labelledby="new-title">
+      <div class="container new__inner">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Transparencia</p>
+          <h2 class="section-title" id="new-title">Somos nuevos</h2>
+          <p class="section-lead">Estamos empezando y lo decimos. Por eso mostramos nuestra forma de trabajar antes que resultados que aún no existen.</p>
+        </div>
+        <figure class="mark" data-reveal="fade">
+          <div class="mark__frame">
+            <img class="mark__logo" src="assets/logo-morfy.webp" width="1986" height="2000" alt="Símbolo de morfy" loading="lazy" decoding="async">
+            <!-- Retícula de construcción: capa aparte sobre el logo, que no se modifica. -->
+            <svg class="mark__grid" viewBox="0 0 1986 2000" aria-hidden="true" focusable="false">
+              <g class="mark__lines">
+                <line x1="394" y1="290" x2="394" y2="1740" vector-effect="non-scaling-stroke"/>
+                <line x1="546" y1="290" x2="546" y2="1740" vector-effect="non-scaling-stroke"/>
+                <line x1="982" y1="290" x2="982" y2="1740" vector-effect="non-scaling-stroke"/>
+                <line x1="1424" y1="290" x2="1424" y2="1740" vector-effect="non-scaling-stroke"/>
+                <line x1="1578" y1="290" x2="1578" y2="1740" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="419" x2="1716" y2="419" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="511" x2="1716" y2="511" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="704" x2="1716" y2="704" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="894" x2="1716" y2="894" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="1132" x2="1716" y2="1132" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="1325" x2="1716" y2="1325" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="1514" x2="1716" y2="1514" vector-effect="non-scaling-stroke"/>
+                <line x1="270" y1="1608" x2="1716" y2="1608" vector-effect="non-scaling-stroke"/>
+                <line x1="262" y1="761" x2="768" y2="299" vector-effect="non-scaling-stroke"/>
+                <line x1="1711" y1="1248" x2="1203" y2="1737" vector-effect="non-scaling-stroke"/>
+                <line x1="862" y1="704" x2="1210" y2="1325" vector-effect="non-scaling-stroke"/>
+                <line x1="764" y1="704" x2="1103" y2="1325" vector-effect="non-scaling-stroke"/>
+              </g>
+              <g class="mark__nodes">
+                <circle cx="394" cy="419" r="22" vector-effect="non-scaling-stroke"/>
+                <circle cx="1578" cy="1608" r="22" vector-effect="non-scaling-stroke"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption class="mark__caption">El símbolo de morfy parte de una M abstraída en nodos conectados: une la estrategia humana con la inteligencia artificial.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 9. Fundadores -->
+    <!-- PENDIENTE: fotos y apellidos -->
+    <section class="section founders" id="fundadores" aria-labelledby="founders-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Fundadores</p>
+          <h2 class="section-title" id="founders-title">Quiénes están detrás</h2>
+          <p class="section-lead">Josías y Sergio son editores y hablan tu mismo idioma tecnológico.</p>
+        </div>
+        <ul class="founders__list" data-reveal-group>
+          <li class="founder" data-reveal>
+            <div class="founder__photo" aria-hidden="true"><span class="founder__initial">J</span></div>
+            <h3 class="founder__name">Josías</h3>
+            <p class="founder__role">Fundador y editor</p>
+          </li>
+          <li class="founder" data-reveal>
+            <div class="founder__photo" aria-hidden="true"><span class="founder__initial">S</span></div>
+            <h3 class="founder__name">Sergio</h3>
+            <p class="founder__role">Fundador y editor</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 10. Preguntas frecuentes -->
+    <section class="section faq" id="preguntas" aria-labelledby="faq-title">
+      <div class="container faq__inner">
+        <div class="section-head" data-reveal>
+          <p class="label label--line">Dudas</p>
+          <h2 class="section-title" id="faq-title">Preguntas frecuentes</h2>
+        </div>
+        <div class="faq__list" data-accordion>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button class="faq__trigger" type="button" id="faq-1-boton" aria-expanded="true" aria-controls="faq-1">
+                <span class="faq__question">¿Qué es una iteración?</span>
+                <svg class="faq__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="faq__icon-v" d="M12 5v14"/></svg>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-1" role="region" aria-labelledby="faq-1-boton">
+              <p class="faq__answer">Es un cambio o arreglo al diseño. El plan Básico incluye 2, el Avanzado 4 y el Premium 6.</p>
+            </div>
+          </div>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button class="faq__trigger" type="button" id="faq-2-boton" aria-expanded="true" aria-controls="faq-2">
+                <span class="faq__question">¿Cuándo veo mi parrilla?</span>
+                <svg class="faq__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="faq__icon-v" d="M12 5v14"/></svg>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-2" role="region" aria-labelledby="faq-2-boton">
+              <p class="faq__answer">La parrilla de contenido se entrega en 3 días.</p>
+            </div>
+          </div>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button class="faq__trigger" type="button" id="faq-3-boton" aria-expanded="true" aria-controls="faq-3">
+                <span class="faq__question">¿La IA reemplaza al editor?</span>
+                <svg class="faq__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="faq__icon-v" d="M12 5v14"/></svg>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-3" role="region" aria-labelledby="faq-3-boton">
+              <p class="faq__answer">No. La IA acelera el proceso; la estrategia y la edición las hacen Josías y Sergio.</p>
+            </div>
+          </div>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button class="faq__trigger" type="button" id="faq-4-boton" aria-expanded="true" aria-controls="faq-4">
+                <span class="faq__question">¿Trabajan fuera de Barbosa?</span>
+                <svg class="faq__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="faq__icon-v" d="M12 5v14"/></svg>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-4" role="region" aria-labelledby="faq-4-boton">
+              <p class="faq__answer">Estamos en Barbosa y, si es necesario, viajamos al lugar donde estés.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Contacto -->
+    <section class="section contact" id="contacto" aria-labelledby="contact-title" data-contact>
+      <div class="container contact__inner">
+        <h2 class="contact__title" id="contact-title" data-reveal>¿Estás listo para dejar una huella de alto valor?</h2>
+        <div class="contact__actions">
+          <a class="btn btn--primary" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+          <a class="btn btn--secondary" href="https://instagram.com/morfy.ai" target="_blank" rel="noopener">Escríbenos por Instagram<span class="visually-hidden"> (abre Instagram)</span></a>
+        </div>
+        <p class="contact__coverage">Cobertura en Barbosa.</p>
+        <ul class="contact__links">
+          <li>
+            <a class="contact__link" href="https://wa.me/573124654380" target="_blank" rel="noopener">
+              <span class="contact__channel">WhatsApp</span> <span class="contact__value">+57 312 465 4380</span><span class="visually-hidden"> (abre WhatsApp)</span>
+            </a>
+          </li>
+          <li>
+            <a class="contact__link" href="https://instagram.com/morfy.ai" target="_blank" rel="noopener">
+              <span class="contact__channel">Instagram</span> <span class="contact__value">@morfy.ai</span><span class="visually-hidden"> (abre Instagram)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <img class="site-footer__logo" src="assets/logo-morfy.webp" width="1986" height="2000" alt="morfy" loading="lazy" decoding="async">
+      <p class="site-footer__motto">Estrategia visual inteligente para mentes que buscan liderar.</p>
+      <p class="site-footer__legal">© 2026 morfy · Barbosa</p>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" data-sticky-cta data-visible="false">
+    <a class="btn btn--primary sticky-cta__btn" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20contenido" target="_blank" rel="noopener">Cuéntanos el objetivo de tu marca<span class="visually-hidden"> (abre WhatsApp)</span></a>
+  </div>
+</body>
+</html>
