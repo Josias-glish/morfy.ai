@@ -106,7 +106,7 @@
   --prim-size-52: 3.25rem;
   --prim-size-64: 4rem;
   --prim-size-72: 4.5rem;
-  --prim-size-mark-sm: 15rem;
+  --prim-size-mark-sm: 11rem;
   --prim-size-mark: 20rem;
   --prim-size-visual: 34rem;
   --prim-width-max: 70rem;
@@ -190,6 +190,8 @@
   --size-control: var(--prim-size-52);
   --size-header: var(--prim-size-64);
   --size-logo-mark: var(--prim-size-mark-sm);
+  --size-logo-header: var(--prim-space-4);
+  --size-logo-footer: var(--prim-size-48);
   --size-visual: var(--prim-size-visual);
   --layout-max: var(--prim-width-max);
 }
@@ -613,7 +615,7 @@ main:focus {
 .brand__logo {
   display: block;
   width: auto;
-  height: var(--size-target);
+  height: var(--size-logo-header);
 }
 
 .site-nav,
@@ -776,6 +778,39 @@ main:focus {
   max-width: 18.5em;
   color: var(--color-text-muted);
   font-size: var(--text-lead);
+}
+
+.hero__services {
+  display: grid;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.hero__services-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--text-label);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hero__services-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__services-list li {
+  padding: var(--space-2xs) var(--space-xs-plus);
+  border: var(--shape-border) solid var(--color-border-strong);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
 }
 
 .hero__actions {
@@ -1461,11 +1496,16 @@ main:focus {
 .mark__frame {
   position: relative;
   width: min(100%, var(--size-logo-mark));
+  aspect-ratio: 2787 / 2800;
 }
 
+/* El logo ocupa el centro; la retícula sigue sus líneas hacia el aire que lo rodea */
 .mark__logo {
+  position: absolute;
+  top: 14.286%;
+  left: 14.352%;
   display: block;
-  width: 100%;
+  width: 71.296%;
   height: auto;
 }
 
@@ -1715,7 +1755,7 @@ main:focus {
 
 .site-footer__logo {
   display: block;
-  width: var(--size-header);
+  width: var(--size-logo-footer);
   height: auto;
 }
 
