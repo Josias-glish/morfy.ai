@@ -2,8 +2,34 @@
 [build]
   publish = "."
 
+# Los archivos de configuración no deben poder descargarse desde la web.
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
+    # Solo HTTPS durante un año (el navegador recuerda no usar HTTP).
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # El navegador no adivina tipos de archivo (evita ejecutar un archivo como script).
     X-Content-Type-Options = "nosniff"
+    # Nadie puede incrustar la página en un iframe (clickjacking).
+    X-Frame-Options = "DENY"
+    # Al salir hacia otro sitio solo se envía el dominio, no la ruta completa.
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Apaga funciones del dispositivo que el sitio no usa.
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    # Aísla la ventana de la página de otras pestañas.
+    Cross-Origin-Opener-Policy = "same-origin"
+    # Solo se ejecuta y carga lo que el sitio usa de verdad. Los hash sha256 son de los 2 scripts
+    # inline de index.html: si se editan, hay que recalcularlos (ver README).
+    Content-Security-Policy = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net 'sha256-dY27DnOnZCu3ot9Vl77S6peJ+hXirh/rCvwEhrR14jE=' 'sha256-V/VRqr3n2pYVX2TKMJtvlsSxpiUWO2CHxeTJAnDtP+k='; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'"
