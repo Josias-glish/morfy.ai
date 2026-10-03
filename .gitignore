@@ -1,34 +1,22 @@
-# Built things
-_Debug/
-Compiled/
+# Secretos y variables de entorno: nunca se suben
+.env
+.env.*
+!.env.example
 
-# AudioCache can be rebuilt from sources
-AudioCache/
+# Dependencias y caché de herramientas
+node_modules/
+.netlify/
 
-# Lockfile
-_OpenInEditor.lock
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
 
-# User settings
-Game.agf.user
-*.crm.user
-
-# Backups
-Game.agf.bak
-backup_acsprset.spr
-
-# Memory dumps
-*.dmp
-
-# Temporary files
-# temporarily created during sprite or room background compression
-~aclzw.tmp
-# temporary, main game data, before getting packed into exe
-game28.dta
-# temporary build of the game before being moved to Compiled/ folder
-*.exe
-
-# Log files
-warnings.log
+# Registros, copias y archivos temporales
+*.log
+*.bak
+*.tmp
 
 # Notas y verificaciones locales (no forman parte de la entrega)
 _trabajo/
