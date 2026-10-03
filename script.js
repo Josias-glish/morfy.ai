@@ -329,6 +329,26 @@
     });
   });
 
+  /* Difuminados de fondo: se activa la combinación de color de la sección que ocupa el centro */
+  safely("difuminados", function () {
+    var sets = $$("[data-glow-set]");
+    var sections = $$("[data-glow]");
+    if (!sets.length || !sections.length || !hasIO) return;
+    var activate = function (key) {
+      sets.forEach(function (set) {
+        set.classList.toggle("is-active", set.getAttribute("data-glow-set") === key);
+      });
+    };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) activate(entry.target.getAttribute("data-glow"));
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+    sections.forEach(function (section) {
+      observer.observe(section);
+    });
+  });
+
   /* Lo que depende de GSAP arranca cuando ya corrieron todos los scripts diferidos */
   document.addEventListener("DOMContentLoaded", function () {
     safely("pasos", initSteps);

@@ -42,6 +42,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </head>
 <body>
+  <!-- Difuminados de color: capa decorativa fija detrás del contenido -->
+  <div class="glow" aria-hidden="true" data-glow-layer>
+    <span class="glow__set glow__set--hero is-active" data-glow-set="hero"></span>
+    <span class="glow__set glow__set--planes" data-glow-set="planes"></span>
+    <span class="glow__set glow__set--proceso" data-glow-set="proceso"></span>
+    <span class="glow__set glow__set--contacto" data-glow-set="contacto"></span>
+  </div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <header class="site-header" data-header>
@@ -62,7 +69,7 @@
 
   <main id="contenido" tabindex="-1">
     <!-- 1. Hero -->
-    <section class="hero" id="inicio" aria-labelledby="hero-title" data-hero>
+    <section class="hero" id="inicio" data-glow="hero" aria-labelledby="hero-title" data-hero>
       <div class="hero__grid" aria-hidden="true">
         <span class="hero__layer hero__layer--fine" data-parallax="4"></span>
         <span class="hero__layer hero__layer--major" data-parallax="8"></span>
@@ -147,7 +154,7 @@
     </section>
 
     <!-- 2. Tensión -->
-    <section class="section tension" id="tension" aria-labelledby="tension-title">
+    <section class="section tension" id="tension" data-glow="hero" aria-labelledby="tension-title">
       <div class="container">
         <h2 class="tension__title" id="tension-title" data-reveal>No todo diseño bonito genera ventas.</h2>
         <p class="tension__text" data-reveal>Muchos negocios tienen un servicio excelente, pero su imagen en redes no lo refleja.</p>
@@ -155,7 +162,7 @@
     </section>
 
     <!-- 3. Propuesta de valor -->
-    <section class="section value" id="propuesta" aria-labelledby="value-title">
+    <section class="section value" id="propuesta" data-glow="hero" aria-labelledby="value-title">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="label label--line">Nuestra propuesta</p>
@@ -179,7 +186,7 @@
     </section>
 
     <!-- 4. Qué hacemos -->
-    <section class="section services" id="servicio" aria-labelledby="services-title">
+    <section class="section services" id="servicio" data-glow="planes" aria-labelledby="services-title">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="label label--line">Qué hacemos</p>
@@ -208,11 +215,50 @@
             <p class="card__text">Video corto vertical para mostrar tu marca en movimiento.</p>
           </li>
         </ul>
+
+        <!-- Fotos de referencia del oficio (CC0, vía Openverse: rawpixel y StockSnap) -->
+        <div class="craft">
+          <h3 class="craft__title">El oficio detrás de cada pieza</h3>
+          <ul class="craft__grid" data-reveal-group>
+            <li class="craft__item" data-reveal>
+              <figure class="craft__figure">
+                <div class="craft__frame">
+                  <img class="craft__img" src="assets/nicho-edicion.webp" width="640" height="640" alt="Persona con audífonos editando fotos en un monitor" loading="lazy" decoding="async">
+                </div>
+                <figcaption class="craft__caption">Edición</figcaption>
+              </figure>
+            </li>
+            <li class="craft__item" data-reveal>
+              <figure class="craft__figure">
+                <div class="craft__frame">
+                  <img class="craft__img" src="assets/nicho-diseno.webp" width="640" height="640" alt="Pantalla de dibujo con su lápiz sobre un escritorio" loading="lazy" decoding="async">
+                </div>
+                <figcaption class="craft__caption">Diseño</figcaption>
+              </figure>
+            </li>
+            <li class="craft__item" data-reveal>
+              <figure class="craft__figure">
+                <div class="craft__frame">
+                  <img class="craft__img" src="assets/nicho-captura.webp" width="640" height="640" alt="Mano fotografiando una taza de café con el celular" loading="lazy" decoding="async">
+                </div>
+                <figcaption class="craft__caption">Captura</figcaption>
+              </figure>
+            </li>
+            <li class="craft__item" data-reveal>
+              <figure class="craft__figure">
+                <div class="craft__frame">
+                  <img class="craft__img" src="assets/nicho-fotografia.webp" width="640" height="640" alt="Cámara réflex sobre una mesa" loading="lazy" decoding="async">
+                </div>
+                <figcaption class="craft__caption">Fotografía</figcaption>
+              </figure>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <!-- 5. Planes -->
-    <section class="section plans" id="planes" aria-labelledby="plans-title">
+    <section class="section plans" id="planes" data-glow="planes" aria-labelledby="plans-title">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="label label--line">Planes</p>
@@ -260,6 +306,21 @@
             </dl>
             <a class="btn btn--secondary plan__cta" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Plan%20Premium" target="_blank" rel="noopener">Elegir el plan Premium<span class="visually-hidden"> (abre WhatsApp)</span></a>
           </article>
+
+          <article class="card plan plan--enterprise" data-tilt data-reveal aria-labelledby="plan-enterprise">
+            <h3 class="plan__name" id="plan-enterprise">Enterprise</h3>
+            <p class="plan__price"><span class="plan__amount">$1.200.000</span> <span class="plan__period">COP al mes</span></p>
+            <dl class="plan__specs">
+              <div class="plan__row"><dt>Posts</dt><dd>18</dd></div>
+              <div class="plan__row"><dt>Carruseles</dt><dd>14</dd></div>
+              <div class="plan__row"><dt>Historias</dt><dd>4 al día</dd></div>
+              <div class="plan__row"><dt>Reels</dt><dd>6</dd></div>
+              <div class="plan__row"><dt>Iteraciones</dt><dd>6</dd></div>
+              <div class="plan__row"><dt>Página web</dt><dd>Creada para ti</dd></div>
+              <div class="plan__row"><dt>Mantenimiento web</dt><dd>$30.000 al mes</dd></div>
+            </dl>
+            <a class="btn btn--secondary plan__cta" href="https://wa.me/573124654380?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Plan%20Enterprise" target="_blank" rel="noopener">Elegir el plan Enterprise<span class="visually-hidden"> (abre WhatsApp)</span></a>
+          </article>
         </div>
 
         <div class="compare" data-compare>
@@ -268,7 +329,7 @@
           </button>
           <div class="compare__panel" id="comparador">
             <p class="compare__title" id="comparador-titulo">Comparación de planes</p>
-            <p class="compare__hint">Desliza la tabla para ver los tres planes.</p>
+            <p class="compare__hint">Desliza la tabla para ver los cuatro planes.</p>
             <div class="compare__frame" data-compare-frame data-start="true" data-end="false">
               <div class="compare__scroll" tabindex="0" role="region" aria-labelledby="comparador-titulo" data-compare-scroll>
                 <table class="compare__table">
@@ -279,15 +340,18 @@
                       <th scope="col">Básico</th>
                       <th scope="col">Avanzado</th>
                       <th scope="col">Premium</th>
+                      <th scope="col">Enterprise</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">Precio al mes</th><td>$300.000</td><td>$500.000</td><td>$800.000</td></tr>
-                    <tr><th scope="row">Posts</th><td>8</td><td>12</td><td>18</td></tr>
-                    <tr><th scope="row">Carruseles</th><td>6</td><td>10</td><td>14</td></tr>
-                    <tr><th scope="row">Historias</th><td>1 al día</td><td>2 al día</td><td>4 al día</td></tr>
-                    <tr><th scope="row">Reels</th><td>2</td><td>4</td><td>6</td></tr>
-                    <tr><th scope="row">Iteraciones</th><td>2</td><td>4</td><td>6</td></tr>
+                    <tr><th scope="row">Precio al mes</th><td>$300.000</td><td>$500.000</td><td>$800.000</td><td>$1.200.000</td></tr>
+                    <tr><th scope="row">Posts</th><td>8</td><td>12</td><td>18</td><td>18</td></tr>
+                    <tr><th scope="row">Carruseles</th><td>6</td><td>10</td><td>14</td><td>14</td></tr>
+                    <tr><th scope="row">Historias</th><td>1 al día</td><td>2 al día</td><td>4 al día</td><td>4 al día</td></tr>
+                    <tr><th scope="row">Reels</th><td>2</td><td>4</td><td>6</td><td>6</td></tr>
+                    <tr><th scope="row">Iteraciones</th><td>2</td><td>4</td><td>6</td><td>6</td></tr>
+                    <tr><th scope="row">Página web</th><td>—</td><td>—</td><td>—</td><td>Creada para ti</td></tr>
+                    <tr><th scope="row">Mantenimiento web</th><td>—</td><td>—</td><td>—</td><td>$30.000 al mes</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -298,7 +362,7 @@
     </section>
 
     <!-- 6. Cómo trabajamos -->
-    <section class="section process" id="proceso" aria-labelledby="process-title">
+    <section class="section process" id="proceso" data-glow="proceso" aria-labelledby="process-title">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="label label--line">Proceso</p>
@@ -340,7 +404,7 @@
     </section>
 
     <!-- 7. Para quién es -->
-    <section class="section audience" id="para-quien" aria-labelledby="audience-title">
+    <section class="section audience" id="para-quien" data-glow="proceso" aria-labelledby="audience-title">
       <div class="container audience__inner">
         <div class="section-head" data-reveal>
           <p class="label label--line">Para quién es</p>
@@ -362,7 +426,7 @@
     </section>
 
     <!-- 8. Somos nuevos -->
-    <section class="section new" id="somos-nuevos" aria-labelledby="new-title">
+    <section class="section new" id="somos-nuevos" data-glow="proceso" aria-labelledby="new-title">
       <div class="container new__inner">
         <div class="section-head" data-reveal>
           <p class="label label--line">Transparencia</p>
@@ -405,7 +469,7 @@
     </section>
 
     <!-- 9. Fundadores -->
-    <section class="section founders" id="fundadores" aria-labelledby="founders-title">
+    <section class="section founders" id="fundadores" data-glow="contacto" aria-labelledby="founders-title">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="label label--line">Fundadores</p>
@@ -432,7 +496,7 @@
     </section>
 
     <!-- 10. Preguntas frecuentes -->
-    <section class="section faq" id="preguntas" aria-labelledby="faq-title">
+    <section class="section faq" id="preguntas" data-glow="contacto" aria-labelledby="faq-title">
       <div class="container faq__inner">
         <div class="section-head" data-reveal>
           <p class="label label--line">Dudas</p>
@@ -483,12 +547,23 @@
               <p class="faq__answer">Estamos en Barbosa y, si es necesario, viajamos al lugar donde estés.</p>
             </div>
           </div>
+          <div class="faq__item">
+            <h3 class="faq__heading">
+              <button class="faq__trigger" type="button" id="faq-5-boton" aria-expanded="true" aria-controls="faq-5">
+                <span class="faq__question">¿Qué incluye la página web del plan Enterprise?</span>
+                <svg class="faq__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="faq__icon-v" d="M12 5v14"/></svg>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq-5" role="region" aria-labelledby="faq-5-boton">
+              <p class="faq__answer">Creamos una página web para tu marca, además del contenido del plan. Su mantenimiento cuesta $30.000 al mes.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- 11. Contacto -->
-    <section class="section contact" id="contacto" aria-labelledby="contact-title" data-contact>
+    <section class="section contact" id="contacto" data-glow="contacto" aria-labelledby="contact-title" data-contact>
       <div class="container contact__inner">
         <h2 class="contact__title" id="contact-title" data-reveal>¿Estás listo para dejar una huella de alto valor?</h2>
         <div class="contact__actions">
