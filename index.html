@@ -17,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" id="font-css" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&amp;display=swap">
+  <link rel="stylesheet" id="font-css" media="print" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&amp;display=swap">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&amp;display=swap"></noscript>
   <link rel="stylesheet" href="styles.css">
 
@@ -25,9 +25,12 @@
   <script>
     (function (doc) {
       doc.documentElement.classList.add("js");
-      // Fuentes sin bloquear el render (antes era un onload inline, que la CSP no permite).
+      // Fuentes sin bloquear el render: la hoja carga como media=print y pasa a all al terminar (sin onload inline, que la CSP no permite).
       var font = doc.getElementById("font-css");
-      if (font) font.addEventListener("load", function () { font.rel = "stylesheet"; }, { once: true });
+      if (font) {
+        if (font.sheet) font.media = "all";
+        else font.addEventListener("load", function () { font.media = "all"; }, { once: true });
+      }
       setTimeout(function () {
         if (!window.morfyBooted) doc.documentElement.classList.remove("js");
       }, 2500);
